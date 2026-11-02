@@ -1,0 +1,60 @@
+name: ChicagoRP
+main: tr.chicagorp.ChicagoRP
+version: 0.1.0
+api-version: '1.21'
+softdepend: [ItemsAdder, Citizens, PlaceholderAPI]
+commands:
+  meslek: {description: Meslek sec}
+  pvp: {description: PvP ac/kapat}
+  profil: {description: Profil}
+  kimlik: {description: Kimlik}
+  ehliyet: {description: Ehliyet}
+  arsa: {description: Arsa yonetimi}
+  jenerator: {description: Jenerator}
+  kilit: {description: Sandik kilidi}
+  tutukla: {description: Tutuklama}
+  polis: {description: Polis kit}
+  siparis: {description: Zirh siparisi}
+  tarla: {description: Ciftci}
+  kimya: {description: Kimyager}
+  elalti: {description: El alti / torbaci}
+  sehir: {description: Sehir olusturucu (admin)}
+  para: {description: Bakiye}
+  telefon: {description: Telefon}
+  galeri: {description: Arac galerisi}
+  arac: {description: Garaj}
+  cete: {description: Cete}
+  ode: {description: Para gonder}
+  paraver: {description: Admin para ver}
+  paraayarla: {description: Admin bakiye ayarla}
+  harita: {description: Sehir haritasi}
+  rpreload: {description: Config yenile}
+  aracver: {description: Admin arac ver}
+  aracsil: {description: Admin arac sil}
+  silahver: {description: Admin silah ver}
+  mermiver: {description: Admin mermi ver}
+  galerimenu: {description: Galeri menusu (NPC/konsol)}
+  silahcimenu: {description: Silahci menusu (NPC/konsol)}
+  bankamenu: {description: Banka menusu (NPC/konsol)}
+  banka: {description: Banka}
+  yatir: {description: Bankaya yatir}
+  cek: {description: Bankadan cek}
+  havale: {description: Havale}
+  silah: {description: Silah ustasi uretimi}
+  levelim: {description: Seviyeni goster}
+  bossbar: {description: Boss bar ac/kapat}
+  taksi: {description: Taksici}
+  kargo: {description: Kargocu}
+  durum: {description: Durumcu}
+  kacak: {description: Kacakci}
+  soygun: {description: Soyguncu}
+  modifiye: {description: Modifiye}
+  modifiyemenu: {description: Modifiye menusu (NPC/konsol)}
+  aracayar: {description: Arac ayar (admin)}
+permissions:
+  rp.admin: {default: op}
+  rp.galeri.use: {default: op}
+  rp.modifiye.use: {default: op}
+  rp.job.polis: {default: op}
+  rp.rank.gangsta: {default: false}
+  rp.rank.boss: {default: false}

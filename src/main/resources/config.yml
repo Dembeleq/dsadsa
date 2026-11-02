@@ -1,0 +1,247 @@
+config-version: 5
+# ======================= GENEL / MESAJLAR =======================
+# Yer tutucular: {server} {player} {online} (+ boss bar icin asagidaki liste)
+server-name: "ChicagoRP"
+prefix: "&8[&6&l{server}&8] &7» &f"
+join-message: "&8[&a+&8] &f{player} &7şehre geldi &8(&e{online}&8)"
+quit-message: "&8[&c-&8] &f{player} &7şehirden ayrıldı"
+welcome-title: "&6&l{server}"
+welcome-subtitle: "&7Hoş geldin, &f{player}"
+job-expire-hours: 48               # bu kadar saat girmeyen oyuncu meslegini kaybeder
+# ======================= BOSS BAR (ekranin ustu) =======================
+# Yer tutucular: {player} {server} {online} {level} {xp} {xp_next} {xp_percent} {xp_bar} {money} {bank} {total}
+#   {job} {job_count} {job_capacity} {gang} {gang_symbol} {gang_color} {gang_members} {gang_tag} {plots} {generators}
+#   {wanted} {car} {speed} {car_hp} {license} {tc} {pvp}      PlaceholderAPI varsa: %chicagorp_level% %chicagorp_money% ... (ayni isimler)
+bossbar:
+  enabled: true
+  text: "&6&l{server} &8| &fSeviye &e{level} &8| &fNakit &a{money} TL &8| &fBanka &b{bank} TL &8| &f{job} &8| &f{gang_tag}"
+  color: PURPLE                    # PINK BLUE RED GREEN YELLOW PURPLE WHITE
+  style: PROGRESS                  # PROGRESS NOTCHED_6 NOTCHED_10 NOTCHED_12 NOTCHED_20
+  progress: xp                     # xp | health | full
+# ======================= MODELLER / KAYNAK PAKETI =======================
+models:
+  enabled: true
+  vehicle-yaw-offset: 0
+  sign-yaw-offset: 0
+  arrow-yaw-offset: 180            # yol oku ters gorunuyorsa 0 (veya /sehir okcevir)
+resource-pack:
+  url: ""
+  sha1: "065e388041a4b280203fb3b8dddc2df9890d4872"
+  required: true
+# ======================= ARACLAR =======================
+vehicle:
+  horse-scale: 0.25                # kucuk = surucu daha alcakta oturur (canli ayar: /aracayar scale 0.2)
+  seat-y: 0.25                     # yolcu koltugu yuksekligi (/aracayar seat-y 0.1)
+  model-y: 0.0                     # govdeyi yukari/asagi kaydir
+  idle-speed: 0.05                 # duragan taban hiz
+  accel: 0.0035                    # tick basina hizlanma (kucuk = yavas hizlanir)
+  brake: 0.012                     # birakinca yavaslama
+  speedometer: true
+  crash-damage: 55                 # carpma hasari carpani
+  repair-cost-per-hp: 50           # arac sahibi odeme (% basina)
+  repair-pay-per-hp: 45            # mekanigin kazandigi (% basina)
+  max-passengers: 4
+gallery:
+  pay-from-bank: true
+guns-enabled: true
+# Meslege ozel ucretsiz arac (/arac is)
+job-vehicles: {polis: polis_araci, taksici: taksi, kargocu: kargo_van, mekanik: mekanik_pickup, durumcu: durum_motor}
+# Modifiyeci: boya + motor paketi
+tuning:
+  paint-price: 5000
+  engine-prices: [25000, 60000, 120000]
+  colors:
+    Kırmızı: "#C8201E"
+    Koyu Kırmızı: "#7A1018"
+    Turuncu: "#F07A14"
+    Sarı: "#F2C21E"
+    Limon: "#96E82A"
+    Yeşil: "#28A53E"
+    Koyu Yeşil: "#1E5A32"
+    Turkuaz: "#1E8C8C"
+    Gök Mavisi: "#78BEF0"
+    Mavi: "#1E55C8"
+    Lacivert: "#142358"
+    Mor: "#8734C3"
+    Pembe: "#E678AA"
+    Beyaz: "#F2F2F2"
+    Gümüş: "#B8BCC4"
+    Gri: "#6E7078"
+    Siyah: "#181A1E"
+    Kahverengi: "#704830"
+    Bordo: "#5A141E"
+    Altın: "#D7AA28"
+# ======================= MESLEKLER =======================
+job-capacity:
+  polis: 8
+  ciftci: 20
+  kimyager: 8
+  torbaci: 12
+  demirci: 6
+  kargocu: 10
+  silah_ustasi: 3
+  balikci: -1
+  mekanik: 6
+  taksici: 8
+  durumcu: 6
+  kacakci: 5
+  soyguncu: 8
+# Meslek bilgileri (telefon > Isler'de sag tik, /meslek bilgi <meslek>)
+jobs:
+  ciftci:
+    desc: "Yasaklı madde ağının ilk halkası: tarla kiralar, ham madde yetiştirir."
+    income: "~24.000 TL/saat (yasa dışı)"
+    how: ["/tarla kirala  → tarlayı 24 saat kiralarsın", "/tarla ek  → ekimi başlatırsın", "10 dk sonra /tarla topla  → 20 ham madde", "/tarla sat  → ham madde NPC'sine satarsın (200 TL/adet)"]
+  kimyager:
+    desc: "Çiftçilerin sattığı ham maddeyi işleyip yasaklı maddeye çevirir."
+    income: "~24.000 TL/saat (yasa dışı)"
+    how: ["/kimya al  → stoktaki ham maddeyi satın alırsın", "/kimya yap  → 60 sn işler", "/kimya sat  → el altı NPC'sine satarsın (280 TL/adet)"]
+  torbaci:
+    desc: "El altından malı alıp müşterilere teslim eder."
+    income: "~24.000 TL/saat (yasa dışı)"
+    how: ["/elalti al  → el altı stokundan mal alırsın", "Müşteriye yaklaş (6 blok)", "/elalti teslim <oyuncu>  → teslimat ücreti alırsın"]
+  demirci:
+    desc: "Oyunculardan gelen zırh siparişlerini üretir."
+    income: "~18.000 TL/saat"
+    how: ["Sipariş gelince /siparis kabul <id>", "Kargocu malzemeyi getirir", "Üretim süresi dolunca ücret otomatik ödenir", "Aynı anda tek iş yapabilirsin"]
+  kargocu:
+    desc: "Şehirde paket taşır ve demirciye malzeme getirir."
+    income: "~18.000 TL/saat"
+    how: ["/kargo gorev  → paket alırsın, yol tarifi açılır", "Teslim noktasına git (yaklaşınca otomatik teslim)", "Hızlı teslimde +%25 bonus", "Zırh siparişleri için: /siparis kargo <id> ve /siparis teslimmat <id>", "Telefon > /arac is ile Kargo Van"]
+  silah_ustasi:
+    desc: "Tüfek, pompalı ve keskin nişancı üretir. Polis haberdar edilir."
+    income: "Silah satışı (oyuncu pazarlığı)"
+    how: ["/silah uret <silah>  → malzeme bedeli ödenir, üretim başlar (20-40 dk)", "Üretim boyunca polise konumun bildirilir", "Bitince silah envanterine gelir; polis engelleyebilir"]
+  balikci:
+    desc: "Limandan olta atarak balık satar."
+    income: "~18.000 TL/saat"
+    how: ["Telefon > Şehir > Liman'a git", "Olta at, balık yakala", "Her balık otomatik para kazandırır"]
+  mekanik:
+    desc: "Kaza yapan araçları tamir eder."
+    income: "~18.000 TL/saat"
+    how: ["Meslek seçince Tamir Çantası verilir", "Bozuk/hasarlı araca çantayla sağ tıkla (6 sn)", "Ücreti araç sahibi öder, sen kazanırsın", "/arac is  → Mekanik Pickup"]
+  taksici:
+    desc: "Oyuncuları istedikleri yere götürür."
+    income: "~18.000 TL/saat"
+    how: ["Yolcu /taksi cagir <yer> yazınca sana bildirim gelir", "/taksi kabul <oyuncu>  → yolcuya git, yol tarifi açılır", "Yolcu aracına binince hedef işaretlenir", "Hedefe varınca ücret yolcudan otomatik alınır", "/arac is  → Taksi"]
+  durumcu:
+    desc: "Dürüm yapıp müşteriye ya da tezgaha satar."
+    income: "~18.000 TL/saat"
+    how: ["Dürümcü dükkanında /durum yap  → 20 sn'de dürüm (60 TL malzeme)", "/durum tezgah  → dükkandan sat (480 TL/adet)", "Ya da /durum sat <oyuncu> <fiyat>; müşteri /durum kabul yazar", "/arac is  → Dürüm Motoru"]
+  polis:
+    desc: "Düzeni sağlar, suçluları kelepçeler ve tutuklar."
+    income: "Tutuklama ödülü (~20.000 TL/saat)"
+    how: ["Meslek seçince zırh, cop, kelepçe ve Glock verilir", "Oyuncuya kelepçeyle sağ tık → kelepçeler (tekrar tık çözer)", "/tutukla <oyuncu>  → hapse gönderir, ödül alırsın", "İhbar/soygun/silah üretimi bildirimleri yol tarifiyle gelir", "/arac is  → Polis Aracı"]
+  kacakci:
+    desc: "Limandan kaçak mal alıp gizli noktalara ulaştırır."
+    income: "~24.000 TL/saat (yasa dışı)"
+    how: ["Limanda /kacak al  → kaçak mal alırsın", "Telefon yol tarifi gizli teslim noktasını gösterir", "Teslim edince büyük ödeme alırsın", "Polise yaklaşık konumun bildirilir; yakalanırsan mal gider"]
+  soyguncu:
+    desc: "Dükkan ve bankaları soyar."
+    income: "~24.000 TL/saat (yasa dışı)"
+    how: ["En az 2 polis çevrimiçi olmalı", "Soyacağın yerin yanında /soygun <yer>", "120 sn bölgeden ayrılma ve hayatta kal", "Başarırsan para alırsın; polis anında bilgilendirilir"]
+# ======================= EKONOMI =======================
+# Hedef (aktif calisan oyuncu): yasal meslekler ~18.000 TL/saat, yasa disi ~24.000 TL/saat.
+start-money: 5000
+generator: {base-income-per-minute: 100, price: 5000}
+arrest-reward: 2500
+arrest-seconds: 180
+ehliyet-price: 3000
+pvp-cooldown-minutes: 10
+daily-reward: 1500
+fishing: {min: 80, max: 170}
+chain:
+  field-rent-price: 2000
+  grow-seconds: 600
+  raw-per-harvest: 20
+  raw-sell-price: 200
+  raw-buy-price: 200
+  refine-seconds: 60
+  product-sell-price: 280
+  dealer-buy-price: 280
+  delivery-pay: 1100
+orders:
+  cargo-pay: 900
+  smith-pay: 1200
+  prep-seconds: 120
+taxi: {fare-base: 400, fare-per-100: 150}
+cargo: {base-pay: 300, per-100: 100}
+durum: {ingredient-cost: 60, cook-seconds: 20, city-price: 480, near-radius: 45}
+smuggle: {pay: 6000, cooldown-minutes: 12, near-radius: 70}
+robbery:
+  min-police: 2
+  seconds: 120
+  radius: 14
+  cooldown-minutes: 30
+  loot: {market: 12000, durumcu: 9000, giyim: 11000, kahve: 8000, silah: 20000, jenerator: 15000, banka: 45000}
+job-salary:
+  mekanik: 0
+  taksici: 0
+  durumcu: 0
+  kacakci: 0
+  soyguncu: 0
+payday-minutes: 10
+bank:
+  transfer-fee: 0.01
+police:
+  cuff-seconds: 120
+gang:
+  default-symbol: "✦"
+  default-color: "&c"
+  tag-format: "&8[{color}{symbol} &f{gang}&8] "
+  colors: {kirmizi: "&c", koyu_kirmizi: "&4", turuncu: "&6", sari: "&e", yesil: "&a", koyu_yesil: "&2", turkuaz: "&b", mavi: "&9", koyu_mavi: "&1", mor: "&5", pembe: "&d", beyaz: "&f", gri: "&7", koyu_gri: "&8"}
+# ======================= ZIRHLAR =======================
+armors:
+  hafif: {name: "&bKevlar Yelek", price: 20000, color: [70, 90, 120], armor: 8.0, toughness: 0.0, produce: 120}
+  orta: {name: "&9Taktik Zırh", price: 55000, color: [45, 70, 45], armor: 14.0, toughness: 2.0, produce: 180}
+  agir: {name: "&cAğır Zırh", price: 130000, color: [60, 60, 66], armor: 19.0, toughness: 4.5, produce: 240}
+  polis: {name: "&9Polis Zırhı", price: 0, color: [20, 40, 120], armor: 15.0, toughness: 3.0, produce: 0, police-only: true}
+# ======================= SILAHLAR =======================
+headshot-multiplier: 1.5
+weapons:
+  bat:     {name: "&6Beyzbol Sopası", type: melee, damage: 6.0, material: STICK, model: wpn_bat, price: 2500, level: 1, shop: true}
+  glock:   {name: "&8Glock 17", type: gun, damage: 5.0, cooldown: 5, mag: 17, reload: 45, range: 45, spread: 0.025, pellets: 1, ammo: pistol, material: BLAZE_ROD, model: wpn_glock, price: 18000, level: 3, shop: true}
+  deagle:  {name: "&7Desert Eagle", type: gun, damage: 7.0, cooldown: 14, mag: 7, reload: 55, range: 55, spread: 0.015, pellets: 1, ammo: pistol, material: BLAZE_ROD, model: wpn_deagle, price: 45000, level: 5, shop: true}
+  ak47:    {name: "&cAK-47", type: gun, damage: 6.0, cooldown: 3, mag: 30, reload: 70, range: 60, spread: 0.04, pellets: 1, ammo: rifle, material: BLAZE_ROD, model: wpn_ak47, shop: false, production-cost: 120000, production-seconds: 1800}
+  pompali: {name: "&6Pompalı", type: gun, damage: 2.5, cooldown: 22, mag: 6, reload: 80, range: 25, spread: 0.12, pellets: 8, ammo: shell, material: BLAZE_ROD, model: wpn_pompali, shop: false, production-cost: 90000, production-seconds: 1200}
+  keskin:  {name: "&bKeskin Nişancı", type: gun, damage: 14.0, cooldown: 35, mag: 5, reload: 90, range: 120, spread: 0.002, pellets: 1, ammo: sniper, material: BLAZE_ROD, model: wpn_keskin, shop: false, production-cost: 200000, production-seconds: 2400}
+ammo:
+  pistol: {name: "&eTabanca Mermisi", price: 80, model: ammo_pistol}
+  rifle: {name: "&aTüfek Mermisi", price: 120, model: ammo_rifle}
+  shell: {name: "&cŞarjör Fişeği", price: 150, model: ammo_shell}
+  sniper: {name: "&9Keskin Nişancı Mermisi", price: 300, model: ammo_sniper}
+# ======================= YERLER (sehir kurulunca otomatik doldurulur) =======================
+spawn: {world: world, x: 0, y: 64, z: 0, radius: 42}
+jail: {world: world, x: 0, y: 64, z: 0}
+phone-ia: ""
+vehicles:
+  clio: {name: "Renault Clio", level: 1, price: 40000, speed: 0.22, seats: 2, scale: 2.0, model: car_clio, material: RED_CONCRETE, ia: "", color: 13115422, paint: true, trunk: 9, job-car: false, driver: [0.4, -0.2], seat-offsets: [[-0.8, 0.0]]}
+  corolla: {name: "Toyota Corolla", level: 2, price: 85000, speed: 0.26, seats: 2, scale: 2.0, model: car_corolla, material: WHITE_CONCRETE, ia: "", color: 15921906, paint: true, trunk: 18, job-car: false, driver: [0.4, -0.12], seat-offsets: [[-0.8, 0.0]]}
+  impreza: {name: "Subaru Impreza 22B STI", level: 3, price: 220000, speed: 0.4, seats: 4, scale: 2.0, model: car_impreza, material: BLUE_CONCRETE, ia: "", color: 1986504, paint: true, trunk: 18, job-car: false, driver: [0.42, -0.1], seat-offsets: [[-0.84, 0.0], [0.0, -0.75], [-0.84, -0.75]]}
+  egea: {name: "Fiat Egea", level: 4, price: 150000, speed: 0.3, seats: 4, scale: 2.0, model: car_egea, material: LIGHT_GRAY_CONCRETE, ia: "", color: 12106948, paint: true, trunk: 27, job-car: false, driver: [0.42, -0.12], seat-offsets: [[-0.84, 0.0], [0.0, -0.73], [-0.84, -0.73]]}
+  jimny: {name: "Suzuki Jimny", level: 5, price: 260000, speed: 0.28, seats: 4, scale: 2.0, model: car_jimny, material: GREEN_CONCRETE, ia: "", color: 2911034, paint: true, trunk: 27, job-car: false, driver: [0.4, -0.12], seat-offsets: [[-0.8, 0.0], [0.0, -0.83], [-0.8, -0.83]]}
+  mustang: {name: "Ford Mustang GT", level: 6, price: 600000, speed: 0.46, seats: 4, scale: 2.0, model: car_mustang, material: YELLOW_CONCRETE, ia: "", color: 15909406, paint: true, trunk: 18, job-car: false, driver: [0.45, -0.5], seat-offsets: [[-0.9, 0.0], [0.0, -0.55], [-0.9, -0.55]]}
+  landcruiser: {name: "Toyota Land Cruiser 300", level: 7, price: 900000, speed: 0.4, seats: 5, scale: 2.0, model: car_landcruiser, material: BLACK_CONCRETE, ia: "", color: 1579550, paint: true, trunk: 54, job-car: false, driver: [0.5, 0.1], seat-offsets: [[-1.0, 0.0], [0.0, -0.9], [-1.0, -0.9], [-0.5, -0.9]]}
+  supra: {name: "Toyota GR Supra A90", level: 8, price: 1500000, speed: 0.55, seats: 2, scale: 2.0, model: car_supra, material: ORANGE_CONCRETE, ia: "", color: 15759892, paint: true, trunk: 9, job-car: false, driver: [0.45, -0.15], seat-offsets: [[-0.9, 0.0]]}
+  polis_araci: {name: "Polis Aracı", level: 0, price: 0, speed: 0.42, seats: 4, scale: 2.0, model: car_polis_araci, material: BLUE_CONCRETE, ia: "", color: 0, paint: false, trunk: 18, job-car: true, driver: [0.42, -0.12], seat-offsets: [[-0.84, 0.0], [0.0, -0.73], [-0.84, -0.73]]}
+  taksi: {name: "Taksi", level: 0, price: 0, speed: 0.3, seats: 4, scale: 2.0, model: car_taksi, material: YELLOW_CONCRETE, ia: "", color: 0, paint: false, trunk: 18, job-car: true, driver: [0.42, -0.1], seat-offsets: [[-0.84, 0.0], [0.0, -0.75], [-0.84, -0.75]]}
+  kargo_van: {name: "Kargo Van", level: 0, price: 0, speed: 0.3, seats: 2, scale: 2.0, model: car_kargo_van, material: ORANGE_CONCRETE, ia: "", color: 0, paint: false, trunk: 54, job-car: true, driver: [0.45, 0.45], seat-offsets: [[-0.9, 0.0]]}
+  mekanik_pickup: {name: "Mekanik Pickup", level: 0, price: 0, speed: 0.32, seats: 2, scale: 2.0, model: car_mekanik_pickup, material: BLUE_CONCRETE, ia: "", color: 0, paint: false, trunk: 54, job-car: true, driver: [0.45, 0.15], seat-offsets: [[-0.9, 0.0]]}
+  durum_motor: {name: "Dürüm Motoru", level: 0, price: 0, speed: 0.34, seats: 1, scale: 2.0, model: car_durum_motor, material: RED_CONCRETE, ia: "", color: 0, paint: false, trunk: 9, job-car: true, driver: [0.0, -0.45], seat-offsets: []}
+# ItemsAdder kullanmak icin ia alanina "namespace:item" yaz.
+signs-def:
+  karakol: {units: 23.5, width: 6.5}
+  durumcu: {units: 20.5, width: 10}
+  market: {units: 17.5, width: 9}
+  giyim: {units: 14.5, width: 8}
+  kahve: {units: 26.5, width: 11}
+  silah: {units: 20.5, width: 10}
+  demirci: {units: 20.5, width: 10}
+  kargo: {units: 14.5, width: 8}
+  mekanik: {units: 20.5, width: 10}
+  galeri: {units: 17.5, width: 14}
+  jenerator: {units: 26.5, width: 12}
+  pavyon: {units: 17.5, width: 10}
+  belediye: {units: 23.5, width: 11}
+  hastane: {units: 20.5, width: 14}
+  banka: {units: 14.5, width: 8}
